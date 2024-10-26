@@ -1,0 +1,30 @@
+Memorie - A Multimedia Memory Keeper App
+
+Memorie is a React Native application designed to capture, store, and showcase multimedia memories such as photos, videos, and audio recordings. This app provides users with an intuitive interface to upload, view, and manage their memories, including essential features like splash screens, modals, and multi-screen navigation.
+
+### Key Features
+
+1. Splash Screen: Displays a custom splash screen upon launching, featuring the app logo and a brief delay to create a smooth startup experience.
+
+2. Home Screen (Memory List):  
+   - View Memories: Displays a list of saved memories with thumbnails and timestamps.
+   - Multimedia Support: Handles images, videos, and audio with specific playback or display components for each type.
+   - Memory Management: Users can delete memories via a confirmation modal.
+   - Navigation to Full View: Allows users to expand images, videos, and audio files to a full-screen view for detailed playback.
+
+3. Memory Upload Screen:
+   - Title and Media: Users can set a title and select media (photo, video, or audio) through file picker options.
+   - Permissions & Media Picker: Requests necessary permissions and provides options to choose from device storage or capture new media (photo/video).
+   - Save & Upload: Upon saving, the memory is stored with its title, media URI, and timestamp.
+
+4. Full-Screen Media Viewer:
+   - Expand Media: Users can expand media to full screen, utilizing dedicated viewers for image and video playback.
+   - Back Navigation: Ensures easy navigation back to the previous screen with customized hardware back-button support.
+
+5. Craetor Profile Modal:
+   - Developer Info: Provides access to the developer's aka craetor's profile, social links (LinkedIn, GitHub), and contact options.
+   - Modal Styling: Ensures a clean and professional appearance with custom buttons for profile links.
+
+6. Offline Memory Storage:
+   - Uses AsyncStorage to save memories persistently on the device, allowing memories to remain accessible even offline.
+   - Memory Context API: Manages memory states globally for easy access and manipulation across screens.

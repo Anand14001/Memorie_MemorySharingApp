@@ -7,22 +7,26 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon1 from 'react-native-vector-icons/Ionicons';
 
 const MemoryListScreen = ({ navigation }) => {
+  // Get memories and functions from the MemoryContext
   const { memories, loadMemories, deleteMemory } = useContext(MemoryContext);
 
   useEffect(() => {
+    // Function to fetch memories when the screen is focused
     const fetchMemories = async () => {
-      await loadMemories();
+      await loadMemories(); // Load memories from the context
       console.log("Loaded memories:", memories); // Log to verify loaded memories
     };
   
-    fetchMemories();
+    fetchMemories(); // Initial fetch
+    // Set up navigation listener to fetch memories when the screen is focused
     const unsubscribe = navigation.addListener('focus', fetchMemories);
   
-    return unsubscribe;
+    return unsubscribe; // Clean up the listener on unmount
   }, [navigation]);
 
+  // Render each memory item
   const renderMemory = ({ item }) => { 
-    console.log(`Rendering memory: ${item.mediaUri}, Type: ${item.mediaType}`);
+    console.log(`Rendering memory: ${item.mediaUri}, Type: ${item.mediaType}`); // Log current memory being rendered
     return(
     <TouchableOpacity onPress={() => handleMemoryPress(item)}>
       <View style={styles.memoryItem}>
@@ -64,6 +68,7 @@ const MemoryListScreen = ({ navigation }) => {
       mediaUri: memory.mediaUri,
       mediaType: memory.mediaType,
       isAudio: memory.mediaType.startsWith('audio'), // Pass whether it's audio
+      timestamp: memory.timestamp,
     });
   };
 

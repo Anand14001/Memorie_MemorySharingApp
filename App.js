@@ -19,22 +19,24 @@ import MemoryListScreen from './src/Screens/MemoryListScreen';
 import MemoryUploadScreen from './src/Screens/MemoryUploadScreen';
 import { MemoryProvider } from './src/Context/MemoryContext';
 import SplashScreen from './src/Screens/SplashScreen';
-import Icon  from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import FullScreenMedia from './src/Screens/FullScreenMedia';
 
-
+// Import images
 const Logo = require('./src/Logo.jpg');
 const Logotxt = require('./src/Logo_txt1.png');
 const pfp = require('./src/creator_pfp.jpg');
 const creatorIcon = require('./src/creator.png');
 
 export default function App() {
-  const [showSplash, setShowSplash] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false); // Modal visibility state
-  const Stack = createNativeStackNavigator();
-  const [backPressCount, setBackPressCount] = useState(0);
+  // State hooks
+  const [showSplash, setShowSplash] = useState(true); // State to control splash screen visibility
+  const [loading, setLoading] = useState(false); // State to control loading indicator visibility
+  const [modalVisible, setModalVisible] = useState(false); // State to control modal visibility
+  const Stack = createNativeStackNavigator(); // Navigator for screen transitions
+  const [backPressCount, setBackPressCount] = useState(0); // Tracks back button presses for exit confirmation
 
+  // Handle Android hardware back button press
   useEffect(() => {
     const backAction = () => {
       if (backPressCount < 1) {
@@ -55,10 +57,12 @@ export default function App() {
     return () => backHandler.remove();
   }, [backPressCount]);
 
+  // Hide splash screen once finished
   const handleSplashFinish = () => {
     setShowSplash(false);
   };
 
+  // Display splash screen or loading indicator if applicable
   if (showSplash) {
     return <SplashScreen onFinish={handleSplashFinish} />;
   }
@@ -75,7 +79,9 @@ export default function App() {
   return (
     <MemoryProvider>
       <NavigationContainer>
+        {/* Stack Navigator */}
         <Stack.Navigator initialRouteName='list'>
+          {/* Memory List Screen */}
           <Stack.Screen 
             name='list' 
             component={MemoryListScreen} 
@@ -91,6 +97,7 @@ export default function App() {
               )
             }} 
           />
+          {/* Memory Upload Screen */}
           <Stack.Screen 
             name='upload' 
             component={MemoryUploadScreen} 
@@ -103,21 +110,28 @@ export default function App() {
               )
             }} 
           />
-          <Stack.Screen name="FullScreenMedia" component={FullScreenMedia} options={{headerTitleAlign:'center',headerTitle:() => (<View>
-
-          </View>)}}/>
+          {/* Full-Screen Media Display */}
+          <Stack.Screen name="FullScreenMedia" component={FullScreenMedia} options={{
+            headerTitleAlign: 'center',
+            headerTitle: () => (<View />)
+          }} />
         </Stack.Navigator>
+
+        {/* Status Bar */}
         <StatusBar backgroundColor={'#fff'} barStyle={'dark-content'} />
 
+        {/* Creator Profile Modal */}
         <Modal
          animationType='fade'
          transparent={true}
          visible={modalVisible}
          onRequestClose={() => setModalVisible(false)}>
 
-<View style={styles.modalContainer}>
+          {/* Modal Content */}
+          <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
               
+              {/* Profile Picture */}
               <Image source={pfp} style={styles.profilePicture} />
 
               {/* Name and Role */}
@@ -126,7 +140,7 @@ export default function App() {
 
               {/* Social Icons */}
               <View style={styles.socialIcons}>
-              <TouchableOpacity onPress={() => Linking.openURL('https://linkedin.com/in/anand-boojesh-r-s')}>
+                <TouchableOpacity onPress={() => Linking.openURL('https://linkedin.com/in/anand-boojesh-r-s')}>
                   <Icon name='linkedin' size={30} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => Linking.openURL('https://github.com/Anand14001')}>
@@ -142,14 +156,15 @@ export default function App() {
                 <Text style={styles.viewProfileText}>View Profile</Text>
               </TouchableOpacity>
 
-              </View>
-              </View>
+            </View>
+          </View>
         </Modal>
       </NavigationContainer>
     </MemoryProvider>
   );
 }
 
+// Styles for the app
 const styles = StyleSheet.create({
   loadingContainer: {
     flex: 1,
